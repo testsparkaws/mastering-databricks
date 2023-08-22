@@ -1,6 +1,7 @@
 -- Databricks notebook source
 CREATE TABLE employees
   (id INT, name STRING, salary DOUBLE);
+  -- USING DELTA 
 
 -- COMMAND ----------
 
@@ -20,10 +21,15 @@ SELECT * FROM employees
 -- COMMAND ----------
 
 DESCRIBE DETAIL employees
+--location, numFiles
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+-- MAGIC 
+%fs ls 'dbfs:/user/hive/warehouse/employees'
+-- 4 data files 
+-- _delta_log/
+-- Cluster has 4 cores
 
 -- COMMAND ----------
 
@@ -32,33 +38,26 @@ SET salary = salary + 100
 WHERE name LIKE "A%"
 
 -- COMMAND ----------
-
 SELECT * FROM employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees'
+-- MAGIC 
+%fs ls 'dbfs:/user/hive/warehouse/employees'
 
 -- COMMAND ----------
-
 DESCRIBE DETAIL employees
 
 -- COMMAND ----------
-
 SELECT * FROM employees
 
 -- COMMAND ----------
-
 DESCRIBE HISTORY employees
 
 -- COMMAND ----------
 
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/employees/_delta_log'
+-- MAGIC 
+%fs ls 'dbfs:/user/hive/warehouse/employees/_delta_log'
 
--- COMMAND ----------
-
--- MAGIC %fs head 'dbfs:/user/hive/warehouse/employees/_delta_log/00000000000000000002.json'
-
--- COMMAND ----------
-
-
+-- COMMAND -- MAGIC 
+%fs head 'dbfs:/user/hive/warehouse/employees/_delta_log/00000000000000000002.json'
