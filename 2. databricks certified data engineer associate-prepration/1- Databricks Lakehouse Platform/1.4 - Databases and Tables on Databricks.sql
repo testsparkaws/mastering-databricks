@@ -1,3 +1,4 @@
+-- data explorer
 -- Databricks notebook source
 CREATE TABLE managed_default
   (width INT, length INT, height INT);
@@ -38,12 +39,13 @@ DROP TABLE external_default
 
 -- MAGIC %fs ls 'dbfs:/mnt/demo/external_default'
 
--- COMMAND ----------
-
+-- 
+CREATE DATABASE new_default
+or
 CREATE SCHEMA new_default
 
--- COMMAND ----------
 
+-- COMMAND ----------
 DESCRIBE DATABASE EXTENDED new_default
 
 -- COMMAND ----------
@@ -92,11 +94,10 @@ CREATE SCHEMA custom
 LOCATION 'dbfs:/Shared/schemas/custom.db'
 
 -- COMMAND ----------
-
 DESCRIBE DATABASE EXTENDED custom
 
--- COMMAND ----------
 
+-- COMMAND ----------
 USE custom;
 
 CREATE TABLE managed_custom
@@ -127,14 +128,9 @@ DESCRIBE EXTENDED external_custom
 DROP TABLE managed_custom;
 DROP TABLE external_custom;
 
--- COMMAND ----------
+-- COMMAND --------- MAGIC 
+%fs ls 'dbfs:/Shared/schemas/custom.db/managed_custom'
 
--- MAGIC %fs ls 'dbfs:/Shared/schemas/custom.db/managed_custom'
-
--- COMMAND ----------
-
--- MAGIC %fs ls 'dbfs:/mnt/demo/external_custom'
-
--- COMMAND ----------
-
+-- COMMAND ------------ MAGIC 
+%fs ls 'dbfs:/mnt/demo/external_custom'
 

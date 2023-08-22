@@ -34,7 +34,6 @@ SELECT * FROM view_apple_phones;
 SHOW TABLES;
 
 -- COMMAND ----------
-
 CREATE TEMP VIEW temp_view_phones_brands
 AS  SELECT DISTINCT brand
     FROM smartphones;
@@ -67,7 +66,3 @@ SHOW TABLES IN global_temp;
 -- COMMAND ----------
 
 SHOW TABLES
-
--- COMMAND ----------
-
-
