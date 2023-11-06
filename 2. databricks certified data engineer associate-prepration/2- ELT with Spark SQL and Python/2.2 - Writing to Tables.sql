@@ -5,8 +5,31 @@
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
--- COMMAND ----------
+customers
+----------
+* customer_id(PK)
+* email
+* profile 
+* updated
 
+Orders
+-----
+* order_id (PK)
+* timestamp
+* customer_id(FK)
+* quantity 
+* total 
+* books (FK)
+
+books 
+-----
+* book_id(PK)
+* title 
+* author 
+* category 
+* price 
+
+-- COMMAND ----------
 -- MAGIC %run ../Includes/Copy-Datasets
 
 -- COMMAND ----------

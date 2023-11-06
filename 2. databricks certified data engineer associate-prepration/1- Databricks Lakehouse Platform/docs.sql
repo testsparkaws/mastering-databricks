@@ -1,9 +1,5 @@
-
-
-
 # Setup Delta Tables 
 - CTAS Statements : Create Table.. AS SELECT 
-
 
 # Table Constraints 
 - Not NULL Constraints 
@@ -13,7 +9,6 @@
 # Cloning Delta Lake Tables 
 - DEEP CLONE 
 - SHALLOW CLONE 
-
 
 
 ######### Views #######
