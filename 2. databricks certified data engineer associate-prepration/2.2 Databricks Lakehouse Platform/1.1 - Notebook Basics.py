@@ -3,8 +3,8 @@ print("Hello World!")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC SELECT "Hello world from SQL!"
+%sql
+SELECT "Hello world from SQL!"
 
 # COMMAND ----------
 
@@ -40,8 +40,7 @@ print("Hello World!")
 # MAGIC Links (or Embedded HTML): <a href="https://docs.databricks.com/notebooks/notebooks-manage.html" target="_blank"> Managing Notebooks documentation</a>
 
 # COMMAND ----------
-
-# MAGIC %run ../Includes/Setup
+%run ../Includes/Setup
 
 # COMMAND ----------
 
@@ -49,9 +48,9 @@ print(full_name)
 
 # COMMAND ----------
 
-# MAGIC %fs ls '/databricks-datasets'
+%fs ls '/databricks-datasets'
 
-# COMMAND ----------
+# COMMAND ---------- databricks utils 
 
 dbutils.help()
 
@@ -69,5 +68,4 @@ print(files)
 display(files)
 
 # COMMAND ----------
-
 # With Tab Command Autocompletion
