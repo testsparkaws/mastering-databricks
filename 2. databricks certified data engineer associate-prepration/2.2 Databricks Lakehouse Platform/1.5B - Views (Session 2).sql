@@ -1,3 +1,5 @@
+### Create new Spark Notebook and test it 
+
 -- Databricks notebook source
 SHOW TABLES; -- temp view is not here in session2  , but exists in session1
 

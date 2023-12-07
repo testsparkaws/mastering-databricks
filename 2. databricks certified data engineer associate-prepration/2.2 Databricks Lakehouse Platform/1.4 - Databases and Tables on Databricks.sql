@@ -20,7 +20,6 @@ INSERT INTO external_default
 VALUES (3 INT, 2 INT, 1 INT)
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED external_default
 
 -- COMMAND ----------
@@ -28,16 +27,13 @@ DESCRIBE EXTENDED external_default
 DROP TABLE managed_default
 
 -- COMMAND ----------
-
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/managed_default'
+%fs ls 'dbfs:/user/hive/warehouse/managed_default'
 
 -- COMMAND ----------
-
 DROP TABLE external_default
 
 -- COMMAND ----------
-
--- MAGIC %fs ls 'dbfs:/mnt/demo/external_default'
+%fs ls 'dbfs:/mnt/demo/external_default'
 
 -- 
 CREATE DATABASE new_default
@@ -68,28 +64,22 @@ INSERT INTO external_new_default
 VALUES (3 INT, 2 INT, 1 INT);
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED managed_new_default
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED external_new_default
 
 -- COMMAND ----------
-
 DROP TABLE managed_new_default;
 DROP TABLE external_new_default;
 
 -- COMMAND ----------
-
--- MAGIC %fs ls 'dbfs:/user/hive/warehouse/managed_new_default'
-
--- COMMAND ----------
-
--- MAGIC %fs ls 'dbfs:/mnt/demo/external_new_default'
+ %fs ls 'dbfs:/user/hive/warehouse/managed_new_default'
 
 -- COMMAND ----------
+%fs ls 'dbfs:/mnt/demo/external_new_default'
 
+-- COMMAND ----------
 CREATE SCHEMA custom
 LOCATION 'dbfs:/Shared/schemas/custom.db'
 
@@ -116,11 +106,9 @@ INSERT INTO external_custom
 VALUES (3 INT, 2 INT, 1 INT);
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED managed_custom
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED external_custom
 
 -- COMMAND ----------
@@ -133,4 +121,3 @@ DROP TABLE external_custom;
 
 -- COMMAND ------------ MAGIC 
 %fs ls 'dbfs:/mnt/demo/external_custom'
-

@@ -15,7 +15,6 @@ VALUES (1, 'iPhone 14', 'Apple', 2022),
       (10, 'Redmi Note 11', 'Xiaomi', 2021)
 
 -- COMMAND ----------
-
 SHOW TABLES
 
 -- COMMAND ----------
@@ -26,11 +25,9 @@ AS  SELECT *
     WHERE brand = 'Apple';
 
 -- COMMAND ----------
-
 SELECT * FROM view_apple_phones;
 
 -- COMMAND ----------
-
 SHOW TABLES;
 
 -- COMMAND ----------
@@ -45,6 +42,7 @@ SELECT * FROM temp_view_phones_brands;
 SHOW TABLES;
 
 -- COMMAND ----------
+TEMP or TEMPORARY
 
 CREATE GLOBAL TEMP VIEW global_temp_view_latest_phones
 AS SELECT * FROM smartphones
@@ -56,7 +54,6 @@ AS SELECT * FROM smartphones
 SELECT * FROM global_temp.global_temp_view_latest_phones;
 
 -- COMMAND ----------
-
 SHOW TABLES;
 
 -- COMMAND ----------
@@ -64,5 +61,4 @@ SHOW TABLES;
 SHOW TABLES IN global_temp;
 
 -- COMMAND ----------
-
 SHOW TABLES

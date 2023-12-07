@@ -1,9 +1,9 @@
 -- Databricks notebook source
-CREATE TABLE employees
-  (id INT, name STRING, salary DOUBLE);
+`CREATE TABLE employees
+  (id INT, name STRING, salary DOUBLE);`
   -- USING DELTA 
 
--- IN data section , default database , there we can find employees tables
+-- IN data section , default database , there we can find employees tables;hive_metastore.default.employees
 -- COMMAND ----------
 
 INSERT INTO employees
@@ -16,7 +16,6 @@ VALUES
   (6, "Kim", 6200.3)
 
 -- COMMAND ----------
-
 SELECT * FROM employees
 
 -- COMMAND ----------
@@ -34,20 +33,17 @@ DESCRIBE DETAIL employees
 
 -- COMMAND ----------
 
-UPDATE employees 
-SET salary = salary + 100
-WHERE name LIKE "A%"
+UPDATE employees SET salary = salary + 100 WHERE name LIKE "A%"
 
 -- COMMAND ----------
 SELECT * FROM employees
 
 -- COMMAND ----------
-
--- MAGIC 
 %fs ls 'dbfs:/user/hive/warehouse/employees'
 
 -- COMMAND ----------
 DESCRIBE DETAIL employees
+-- no of files 4 only 
 
 -- COMMAND ----------
 SELECT * FROM employees

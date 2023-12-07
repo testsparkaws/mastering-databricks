@@ -30,33 +30,30 @@ books
 * price 
 
 -- COMMAND ----------
--- MAGIC %run ../Includes/Copy-Datasets
+%run ../Includes/Copy-Datasets
 
 -- COMMAND ----------
 
 CREATE TABLE orders AS
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
--- COMMAND ----------
+--- describe extended orders ? is it delta table 
 
+-- COMMAND ----------
 SELECT * FROM orders
 
 -- COMMAND ----------
-
 CREATE OR REPLACE TABLE orders AS
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 -- COMMAND ----------
-
 DESCRIBE HISTORY orders
 
 -- COMMAND ----------
-
 INSERT OVERWRITE orders
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 -- COMMAND ----------
-
 DESCRIBE HISTORY orders
 
 -- COMMAND ----------
@@ -65,16 +62,14 @@ INSERT OVERWRITE orders
 SELECT *, current_timestamp() FROM parquet.`${dataset.bookstore}/orders`
 
 -- COMMAND ----------
-
 INSERT INTO orders
 SELECT * FROM parquet.`${dataset.bookstore}/orders-new`
 
--- COMMAND ----------
 
+-- COMMAND ----------
 SELECT count(*) FROM orders
 
--- COMMAND ----------
-
+-- COMMAND : Upsert data : INSERT , UPDATE & DELETE : ALl Together ----------
 CREATE OR REPLACE TEMP VIEW customers_updates AS 
 SELECT * FROM json.`${dataset.bookstore}/customers-json-new`;
 
@@ -101,7 +96,9 @@ SELECT * FROM books_updates
 -- COMMAND ----------
 
 MERGE INTO books b
-USING books_updates u
+USING books_updates u -- new updates here 
 ON b.book_id = u.book_id AND b.title = u.title
 WHEN NOT MATCHED AND u.category = 'Computer Science' THEN 
   INSERT *
+
+# if u run again , nothing will happend, its doesnt allow duplicate 

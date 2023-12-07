@@ -5,34 +5,33 @@
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
--- COMMAND ----------
-
--- MAGIC %run ../Includes/Copy-Datasets
+-- ##### High Order Function : FILTER, TRANSFORM 
 
 -- COMMAND ----------
+%run ../Includes/Copy-Datasets
 
+-- COMMAND ----------
 SELECT * FROM orders
 
+-- books: complex data types, as struct type
 -- COMMAND ----------
-
 SELECT
   order_id,
   books,
   FILTER (books, i -> i.quantity >= 2) AS multiple_copies
 FROM orders
 
--- COMMAND ----------
-
+-- COMMAND : SUB QUERY ----------
 SELECT order_id, multiple_copies
 FROM (
   SELECT
     order_id,
     FILTER (books, i -> i.quantity >= 2) AS multiple_copies
-  FROM orders)
+  FROM orders
+ )
 WHERE size(multiple_copies) > 0;
 
 -- COMMAND ----------
-
 SELECT
   order_id,
   books,
@@ -42,28 +41,22 @@ SELECT
   ) AS subtotal_after_discount
 FROM orders;
 
--- COMMAND ----------
-
+-- COMMAND : user Define Function ----------
 CREATE OR REPLACE FUNCTION get_url(email STRING)
 RETURNS STRING
-
 RETURN concat("https://www.", split(email, "@")[1])
 
--- COMMAND ----------
-
-SELECT email, get_url(email) domain
-FROM customers
 
 -- COMMAND ----------
+SELECT email, get_url(email) domain FROM customers
 
+-- COMMAND ----------
 DESCRIBE FUNCTION get_url
 
 -- COMMAND ----------
-
 DESCRIBE FUNCTION EXTENDED get_url
 
 -- COMMAND ----------
-
 CREATE FUNCTION site_type(email STRING)
 RETURNS STRING
 RETURN CASE 
@@ -71,18 +64,12 @@ RETURN CASE
           WHEN email like "%.org" THEN "Non-profits organization"
           WHEN email like "%.edu" THEN "Educational institution"
           ELSE concat("Unknow extenstion for domain: ", split(email, "@")[1])
-       END;
+  END;
 
 -- COMMAND ----------
-
-SELECT email, site_type(email) as domain_category
-FROM customers
+SELECT email, site_type(email) as domain_category FROM customers;
 
 -- COMMAND ----------
 
 DROP FUNCTION get_url;
 DROP FUNCTION site_type;
-
--- COMMAND ----------
-
-

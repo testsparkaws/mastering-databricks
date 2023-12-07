@@ -81,11 +81,12 @@ SET spark.databricks.delta.retentionDurationCheck.enabled = false;
 -- COMMAND ----------
 VACUUM employees RETAIN 0 HOURS
 
--- COMMAND ----------- MAGIC 
+-- COMMAND ---
 %fs ls 'dbfs:/user/hive/warehouse/employees'
 
 -- COMMAND ----------
 SELECT * FROM employees@v1
+-- file not found exception
 
 -- COMMAND ----------
 DROP TABLE employees
