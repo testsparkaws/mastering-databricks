@@ -17,17 +17,29 @@
 -- MAGIC %md
 -- MAGIC ## Bronze Layer Tables
 
+#### DLT(Delta Live tables)
+------ RAW----------------  SILVER -------------------- GOLD 
+    # Customers       ----   
+                      ----- orderes_cleaned ------ cn_daily_customer      
+    # orders_raw      -----
+
+
 -- COMMAND ----------
 
 -- MAGIC %md
--- MAGIC #### orders_raw
+#### orders_raw
 
 -- COMMAND ----------
-
 CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
 COMMENT "The raw books orders, ingested from orders-raw"
 AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
                              map("cloudFiles.inferColumnTypes", "true"))
+
+
+CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
+COMMENT "The raw books orders, ingested from orders-raw"
+AS SELECT * FROM cloud_files("${datasets_path}/orders-raw", "parquet",
+                             map("shema", "order_id STRING, order_timestamp LONG, customer_id STRING, quantity LONG"))
 
 -- COMMAND ----------
 
@@ -83,7 +95,6 @@ AS
 -- MAGIC ## Gold Tables
 
 -- COMMAND ----------
-
 CREATE OR REFRESH LIVE TABLE cn_daily_customer_books
 COMMENT "Daily number of books per customer in China"
 AS
@@ -92,8 +103,7 @@ AS
   WHERE country = "China"
   GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
 
--- COMMAND ----------
-
+-- COMMAND ---------- ### Once Pipeline is created then create this notebook 
 CREATE OR REFRESH LIVE TABLE fr_daily_customer_books
 COMMENT "Daily number of books per customer in France"
 AS
@@ -103,5 +113,42 @@ AS
   GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
 
 -- COMMAND ----------
+# Start again once modified the notebook 
 
 
+# Workflow > Delta Live Table 
+# create Pipeline 
+# Piplein Name : demo_bookstore 
+# Notebook libraries : ../Delta_live_tables 
+# CONFIGURTIOn
+# datasets.path: dbfs:/mnt/demo-datasets/bookstore 
+
+#Storage Location 
+dbfs:/mnt/demo/dlt/demo_bookstore 
+
+#Target:
+demo_bookstore_dlt_db 
+
+# Pipeline mode
+triggered
+
+# Cluster Mode 
+FIXES 
+
+Cluster 
+Workers: 1 
+
+Polciy
+DBU/Hour:1
+
+# CREATE 
+
+# Development
+- Start 
+
+
+#################  Data Quality Section #######
+- Expectation 
+
+
+## COmpute : Job Cluster # Terminate this pipeline cluster 

@@ -31,14 +31,12 @@ APPLY CHANGES INTO LIVE.books_silver
   COLUMNS * EXCEPT (row_status, row_time)
 
 -- COMMAND ----------
-
 -- MAGIC %md
 -- MAGIC 
 -- MAGIC 
 -- MAGIC ## Gold Layer Tables
 
 -- COMMAND ----------
-
 CREATE LIVE TABLE author_counts_state
   COMMENT "Number of books per author"
 AS SELECT author, count(*) as books_count, current_timestamp() updated_time
@@ -46,12 +44,8 @@ AS SELECT author, count(*) as books_count, current_timestamp() updated_time
   GROUP BY author
 
 -- COMMAND ----------
-
 -- MAGIC %md
 -- MAGIC ## DLT Views
-
--- COMMAND ----------
-
 CREATE LIVE VIEW books_sales
   AS SELECT b.title, o.quantity
     FROM (
@@ -59,3 +53,12 @@ CREATE LIVE VIEW books_sales
       FROM LIVE.orders_cleaned) o
     INNER JOIN LIVE.books_silver b
     ON o.book.book_id = b.book_id;
+  
+
+# Setting 
+# ADd notebook Librarire 
+# 4.12 books pipeline 
+
+# Start
+  # Start : Only latest changes 
+  # Full Refresh All > It will do everythig from scratch 
