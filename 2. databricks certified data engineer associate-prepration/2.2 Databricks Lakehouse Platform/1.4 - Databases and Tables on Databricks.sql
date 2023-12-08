@@ -7,11 +7,9 @@ INSERT INTO managed_default
 VALUES (3 INT, 2 INT, 1 INT)
 
 -- COMMAND ----------
-
 DESCRIBE EXTENDED managed_default
 
 -- COMMAND ----------
-
 CREATE TABLE external_default
   (width INT, length INT, height INT)
 LOCATION 'dbfs:/mnt/demo/external_default';
@@ -35,17 +33,15 @@ DROP TABLE external_default
 -- COMMAND ----------
 %fs ls 'dbfs:/mnt/demo/external_default'
 
--- 
+--############# Create Database or SCHEMA in default LOCATION ############# 
 CREATE DATABASE new_default
 or
 CREATE SCHEMA new_default
-
 
 -- COMMAND ----------
 DESCRIBE DATABASE EXTENDED new_default
 
 -- COMMAND ----------
-
 USE new_default;
 
 CREATE TABLE managed_new_default
@@ -79,7 +75,7 @@ DROP TABLE external_new_default;
 -- COMMAND ----------
 %fs ls 'dbfs:/mnt/demo/external_new_default'
 
--- COMMAND ----------
+--############# Create Database or SCHEMA in default LOCATION #############  ----------
 CREATE SCHEMA custom
 LOCATION 'dbfs:/Shared/schemas/custom.db'
 
@@ -97,7 +93,6 @@ INSERT INTO managed_custom
 VALUES (3 INT, 2 INT, 1 INT);
 
 -----------------------------------
-
 CREATE TABLE external_custom
   (width INT, length INT, height INT)
 LOCATION 'dbfs:/mnt/demo/external_custom';

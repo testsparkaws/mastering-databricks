@@ -3,23 +3,18 @@ DESCRIBE HISTORY employees
 -- version (2, 1, 0)
 
 -- COMMAND ----------
-
 SELECT * 
 FROM employees VERSION AS OF 1
 
 -- COMMAND ----------
-
 SELECT * FROM employees@v1
 
 -- COMMAND ----------
-
 DELETE FROM employees
 -- -1 : all data removed
 
-
 -- COMMAND ----------
 SELECT * FROM employees
-
 
 -- COMMAND ----------
 RESTORE TABLE employees TO VERSION AS OF 2 
@@ -49,7 +44,6 @@ ZORDER BY id
 
 -- numFilesAdded: 1
 -- numFileRemoved: 4
-
 
 -- COMMAND ----------
 DESCRIBE DETAIL employees

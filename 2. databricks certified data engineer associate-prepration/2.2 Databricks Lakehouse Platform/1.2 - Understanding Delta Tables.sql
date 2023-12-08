@@ -19,7 +19,6 @@ VALUES
 SELECT * FROM employees
 
 -- COMMAND ----------
-
 DESCRIBE DETAIL employees
 --location, numFiles
 
