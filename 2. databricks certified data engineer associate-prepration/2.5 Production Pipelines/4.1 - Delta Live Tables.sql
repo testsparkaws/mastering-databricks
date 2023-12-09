@@ -13,10 +13,6 @@
 -- MAGIC </div>
 
 -- COMMAND ----------
-
--- MAGIC %md
--- MAGIC ## Bronze Layer Tables
-
 #### DLT(Delta Live tables)
 ------ RAW----------------  SILVER -------------------- GOLD 
     # Customers       ----   
@@ -24,12 +20,17 @@
     # orders_raw      -----
 
 
+
+
+%md
+## Bronze Layer Tables
+
 -- COMMAND ----------
 
 -- MAGIC %md
 #### orders_raw
 
--- COMMAND ----------
+-- COMMAND ---------- STREAMING LIVE 
 CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
 COMMENT "The raw books orders, ingested from orders-raw"
 AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
@@ -42,28 +43,20 @@ AS SELECT * FROM cloud_files("${datasets_path}/orders-raw", "parquet",
                              map("shema", "order_id STRING, order_timestamp LONG, customer_id STRING, quantity LONG"))
 
 -- COMMAND ----------
+%md
+#### customers
 
--- MAGIC %md
--- MAGIC #### customers
-
--- COMMAND ----------
-
+-- COMMAND ---------- LIVE 
 CREATE OR REFRESH LIVE TABLE customers
 COMMENT "The customers lookup table, ingested from customers-json"
 AS SELECT * FROM json.`${datasets_path}/customers-json`
 
 -- COMMAND ----------
+%md
+## Silver Layer Tables
+#### orders_cleaned
 
--- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC 
--- MAGIC ## Silver Layer Tables
--- MAGIC 
--- MAGIC #### orders_cleaned
-
--- COMMAND ----------
-
+-- COMMAND ----------STREAMING LIVE 
 CREATE OR REFRESH STREAMING LIVE TABLE orders_cleaned (
   CONSTRAINT valid_order_number EXPECT (order_id IS NOT NULL) ON VIOLATION DROP ROW
 )
