@@ -13,7 +13,6 @@ files = dbutils.fs.ls(f"{dataset_bookstore}/orders-raw")
 display(files)
 
 # COMMAND ----------
-
 (spark.readStream
     .format("cloudFiles")
     .option("cloudFiles.format", "parquet")

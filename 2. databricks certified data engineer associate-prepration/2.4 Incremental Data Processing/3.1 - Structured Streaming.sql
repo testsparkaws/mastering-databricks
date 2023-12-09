@@ -21,7 +21,7 @@ SELECT author, count(book_id) AS total_books
 FROM books_streaming_tmp_vw
 GROUP BY author
 
--- COMMAND ----------
+-- COMMAND ----------AnalysisException: Sorting is not supported on streaming DataFrames/Datasets,
 SELECT * 
 FROM books_streaming_tmp_vw
 ORDER BY author

@@ -49,5 +49,3 @@ DROP TABLE orders_updates
 dbutils.fs.rm("dbfs:/mnt/demo/orders_checkpoint", True)
 
 # COMMAND ----------
-
-
