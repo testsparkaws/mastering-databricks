@@ -17,8 +17,7 @@ VALUES (1, 'iPhone 14', 'Apple', 2022),
 -- COMMAND ----------
 SHOW TABLES
 
--- COMMAND ----------
-
+-- COMMAND ----------Its a  Permamnent View 
 CREATE VIEW view_apple_phones
 AS  SELECT * 
     FROM smartphones 
@@ -38,12 +37,10 @@ AS  SELECT DISTINCT brand
 SELECT * FROM temp_view_phones_brands;
 
 -- COMMAND ----------
-
 SHOW TABLES;
 
 -- COMMAND ----------
-TEMP or TEMPORARY
-
+-- TEMP or TEMPORARY
 CREATE GLOBAL TEMP VIEW global_temp_view_latest_phones
 AS SELECT * FROM smartphones
     WHERE year > 2020
