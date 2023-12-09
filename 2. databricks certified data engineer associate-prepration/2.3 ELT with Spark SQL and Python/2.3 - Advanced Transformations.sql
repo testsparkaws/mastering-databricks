@@ -5,7 +5,6 @@
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
-
 customers
 ----------
 * customer_id(PK)

@@ -33,10 +33,8 @@ books
 %run ../Includes/Copy-Datasets
 
 -- COMMAND ----------
-
 CREATE TABLE orders AS
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
-
 --- describe extended orders ? is it delta table 
 
 -- COMMAND ----------
@@ -57,7 +55,6 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 DESCRIBE HISTORY orders
 
 -- COMMAND ----------
-
 INSERT OVERWRITE orders
 SELECT *, current_timestamp() FROM parquet.`${dataset.bookstore}/orders`
 
@@ -69,10 +66,11 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders-new`
 -- COMMAND ----------
 SELECT count(*) FROM orders
 
--- COMMAND : Upsert data : INSERT , UPDATE & DELETE : ALl Together ----------
+-- COMMAND 
 CREATE OR REPLACE TEMP VIEW customers_updates AS 
 SELECT * FROM json.`${dataset.bookstore}/customers-json-new`;
 
+-- COMMAND : Upsert data : INSERT , UPDATE & DELETE : ALl Together ----------
 MERGE INTO customers c
 USING customers_updates u
 ON c.customer_id = u.customer_id
@@ -81,7 +79,6 @@ WHEN MATCHED AND c.email IS NULL AND u.email IS NOT NULL THEN
 WHEN NOT MATCHED THEN INSERT *
 
 -- COMMAND ----------
-
 CREATE OR REPLACE TEMP VIEW books_updates
    (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
 USING CSV

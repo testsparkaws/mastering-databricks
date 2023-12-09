@@ -5,8 +5,6 @@
 -- MAGIC   <img src="https://dalhussein.blob.core.windows.net/course-resources/bookstore_schema.png" alt="Databricks Learning" style="width: 600">
 -- MAGIC </div>
 
-- Custi
-
 -- COMMAND ----------
 %run ../Includes/Copy-Datasets
 
@@ -37,7 +35,6 @@ SELECT count(*) FROM json.`${dataset.bookstore}/customers-json`
 SELECT * FROM text.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
-
 SELECT * FROM binaryFile.`${dataset.bookstore}/customers-json`
 
 -- COMMAND ----------
