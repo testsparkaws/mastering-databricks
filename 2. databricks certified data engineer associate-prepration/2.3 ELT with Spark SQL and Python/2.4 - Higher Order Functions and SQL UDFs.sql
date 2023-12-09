@@ -31,7 +31,7 @@ FROM (
  )
 WHERE size(multiple_copies) > 0;
 
--- COMMAND ----------
+-- COMMAND : CAST----------
 SELECT
   order_id,
   books,
