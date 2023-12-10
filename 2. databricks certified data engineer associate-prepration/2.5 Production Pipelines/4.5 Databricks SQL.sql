@@ -14,7 +14,7 @@
 -- Create 
 
 
-# NYC Taxi Trip Analusis -> Import 
+# NYC Taxi Trip Analysis -> Import 
 # add Pie Chart to Dasboard 
 
 

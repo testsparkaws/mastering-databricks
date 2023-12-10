@@ -1,26 +1,15 @@
 -- Databricks notebook source
--- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC 
--- MAGIC ## Bronze Layer Tables
 
 -- COMMAND ----------
-
+%md
+## Bronze Layer Tables
 CREATE OR REFRESH STREAMING LIVE TABLE books_bronze
 COMMENT "The raw books data, ingested from CDC feed"
 AS SELECT * FROM cloud_files("${datasets_path}/books-cdc", "json")
 
 -- COMMAND ----------
-
--- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC 
--- MAGIC ## Silver Layer Tables
-
--- COMMAND ----------
-
+%md
+## Silver Layer Tables
 CREATE OR REFRESH STREAMING LIVE TABLE books_silver;
 
 APPLY CHANGES INTO LIVE.books_silver
@@ -31,10 +20,8 @@ APPLY CHANGES INTO LIVE.books_silver
   COLUMNS * EXCEPT (row_status, row_time)
 
 -- COMMAND ----------
--- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC ## Gold Layer Tables
+%md
+## Gold Layer Tables
 
 -- COMMAND ----------
 CREATE LIVE TABLE author_counts_state
@@ -55,6 +42,7 @@ CREATE LIVE VIEW books_sales
     ON o.book.book_id = b.book_id;
   
 
+###################################
 # Setting 
 # ADd notebook Librarire 
 # 4.12 books pipeline 

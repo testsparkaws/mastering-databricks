@@ -19,9 +19,6 @@
                       ----- orderes_cleaned ------ cn_daily_customer      
     # orders_raw      -----
 
-
-
-
 %md
 ## Bronze Layer Tables
 
@@ -35,7 +32,6 @@ CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
 COMMENT "The raw books orders, ingested from orders-raw"
 AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
                              map("cloudFiles.inferColumnTypes", "true"))
-
 
 CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
 COMMENT "The raw books orders, ingested from orders-raw"
@@ -62,9 +58,16 @@ CREATE OR REFRESH STREAMING LIVE TABLE orders_cleaned (
 )
 COMMENT "The cleaned books orders with valid order_id"
 AS
-  SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
-         cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, o.books,
-         c.profile:address:country as country
+  SELECT 
+      order_id
+      ,quantity
+      ,o.customer_id
+      ,c.profile:first_name as f_name
+      ,c.profile:last_name as l_name
+      ,cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp
+      ,o.books
+      ,c.profile:address:country as country
+
   FROM STREAM(LIVE.orders_raw) o
   LEFT JOIN LIVE.customers c
     ON o.customer_id = c.customer_id
@@ -82,10 +85,8 @@ AS
 
 -- COMMAND ----------
 
--- MAGIC %md
--- MAGIC 
--- MAGIC 
--- MAGIC ## Gold Tables
+%md
+## Gold Tables
 
 -- COMMAND ----------
 CREATE OR REFRESH LIVE TABLE cn_daily_customer_books
@@ -105,43 +106,41 @@ AS
   WHERE country = "France"
   GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
 
--- COMMAND ----------
+
+
+--####################### COMMAND #########################----------
 # Start again once modified the notebook 
+* Workflows => Delta Live Table 
+* create Pipeline 
+* Piplein Name : demo_bookstore 
+* Notebook libraries : ../Delta_live_tables 
 
 
-# Workflow > Delta Live Table 
-# create Pipeline 
-# Piplein Name : demo_bookstore 
-# Notebook libraries : ../Delta_live_tables 
-# CONFIGURTIOn
+
+# Destination 
+ * Storage Location : dbfs:/mnt/demo/dlt/demo_bookstore 
+ * Target Shema : demo_bookstore_dlt_db 
+
+# Pipeline mode: triggered
+
+# Cluster Mode : FIXED SIZE 
+#Cluster => Workers: 1 
+
+
+
+#Policy => DBU/Hour:1
+# Advance CONFIGURTION
 # datasets.path: dbfs:/mnt/demo-datasets/bookstore 
-
-#Storage Location 
-dbfs:/mnt/demo/dlt/demo_bookstore 
-
-#Target:
-demo_bookstore_dlt_db 
-
-# Pipeline mode
-triggered
-
-# Cluster Mode 
-FIXES 
-
-Cluster 
-Workers: 1 
-
-Polciy
-DBU/Hour:1
 
 # CREATE 
 
-# Development
-- Start 
+# Development: Start 
 
+######## COMPUTE ###########
+- JOB COMPUTE SECTION : dlt-execution-0a988662-6d60-4
+  # Worker Type: Standard_F8s => 16 GB , 8 Cores , Workers : 1
+  # Driver Type: Standard_f8s => 16 GB , 8 Cores 
 
 #################  Data Quality Section #######
 - Expectation 
-
-
-## COmpute : Job Cluster # Terminate this pipeline cluster 
+## Compute : Job Cluster # Terminate this pipeline cluster 
